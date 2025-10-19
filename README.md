@@ -10,19 +10,19 @@ Combine Claude Code's implementation prowess with Codex's deep reasoning capabil
 
 ---
 
-## 🌟 Features
+## Features
 
-- **💰 Zero API Costs**: Uses ChatGPT and Anthropic CLI subscriptions (saves $50-100+ per project)
-- **🔄 Bidirectional Integration**: Claude calls Codex via MCP, Codex calls Claude via CLI
-- **🎯 Automated Delegation**: Smart complexity detection suggests when to use which tool
-- **📦 5 MCP Tools**: reason, plan, spec, analyze, compare
-- **⚡ Slash Commands**: `/plan`, `/reason`, `/spec`, `/codex` for easy access
-- **💾 Shared Context**: Session persistence across tool boundaries
-- **🔒 Secure**: CLI authentication, no API keys to manage or leak
+- **Zero API Costs**: Uses ChatGPT and Anthropic CLI subscriptions (saves $50-100+ per project)
+- **Bidirectional Integration**: Claude calls Codex via MCP, Codex calls Claude via CLI
+- **Automated Delegation**: Smart complexity detection suggests when to use which tool
+- **5 MCP Tools**: reason, plan, spec, analyze, compare
+- **Slash Commands**: `/plan`, `/reason`, `/spec`, `/codex` for easy access
+- **Shared Context**: Session persistence across tool boundaries
+- **Secure**: CLI authentication, no API keys to manage or leak
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ### Bidirectional Workflow
 
@@ -73,7 +73,7 @@ Combine Claude Code's implementation prowess with Codex's deep reasoning capabil
 
 ---
 
-## 🚀 Quick Setup (5 Minutes)
+## Quick Setup (5 Minutes)
 
 ### Prerequisites
 
@@ -136,11 +136,11 @@ claude
 /plan implement a simple TODO list
 ```
 
-✅ **Setup complete!** See [CLI-ONLY-SETUP.md](./CLI-ONLY-SETUP.md) for detailed instructions.
+**Setup complete!** See [CLI-ONLY-SETUP.md](./CLI-ONLY-SETUP.md) for detailed instructions.
 
 ---
 
-## 💡 Usage
+## Usage
 
 ### Using Slash Commands in Claude Code
 
@@ -225,7 +225,7 @@ Phase 4: Testing & Security
 
 ---
 
-## 📦 What's Included
+## What's Included
 
 ### Core Components
 
@@ -279,7 +279,7 @@ cc-codex/
 
 ---
 
-## 💰 Cost Comparison
+## Cost Comparison
 
 ### Traditional API Approach
 
@@ -302,12 +302,12 @@ Example Project (50 reasoning tasks):
 • Unlimited tokens
 • Cost: $0 additional (beyond subscriptions)
 
-💰 Savings: $50-100+ per project!
+Savings: $50-100+ per project!
 ```
 
 ---
 
-## 🎯 Use Cases
+## Use Cases
 
 ### 1. Feature Planning
 ```bash
@@ -356,7 +356,7 @@ Example Project (50 reasoning tasks):
 
 ---
 
-## 🔧 Configuration
+## Configuration
 
 ### Codex Settings (`~/.codex/config.toml`)
 
@@ -392,7 +392,7 @@ trust_level = "trusted"
 
 ---
 
-## 📚 Documentation
+## Documentation
 
 | Document | Description |
 |----------|-------------|
@@ -406,7 +406,7 @@ trust_level = "trusted"
 
 ---
 
-## 🧪 Testing
+## Testing
 
 Run comprehensive integration test:
 
@@ -425,7 +425,7 @@ Expected output:
 
 ---
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### MCP Server Not Responding
 
@@ -474,7 +474,7 @@ ls -la /Users/rachitt/cc-codex/codex-mcp-server/dist/index.js
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 This is a personal integration setup, but feel free to:
 
@@ -485,13 +485,13 @@ This is a personal integration setup, but feel free to:
 
 ---
 
-## 📄 License
+## License
 
 MIT License - See LICENSE file for details
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - **OpenAI** for Codex CLI and gpt-5 model
 - **Anthropic** for Claude Code and Claude API
@@ -500,7 +500,7 @@ MIT License - See LICENSE file for details
 
 ---
 
-## 🔗 Resources
+## Resources
 
 - [OpenAI Codex CLI Docs](./openai-codex-cli-docs.md)
 - [Codex Commands Cheatsheet](./codex-cli-commands-cheatsheet.md)
@@ -510,7 +510,7 @@ MIT License - See LICENSE file for details
 
 ---
 
-## ⚡ Quick Reference
+## Quick Reference
 
 ### Slash Commands
 ```bash
@@ -532,6 +532,6 @@ codex exec -m gpt-5 --full-auto "reasoning task"
 
 ---
 
-**Built with ❤️ for seamless AI-assisted development**
+**Built for seamless AI-assisted development**
 
 **Zero API costs • Production ready • 5-minute setup**
