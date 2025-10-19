@@ -1,0 +1,29 @@
+# Build artifacts
+firedb/firedb
+
+# Exclude entire firedb directory
+firedb/
+
+# Node modules
+node_modules/
+codex-mcp-server/node_modules/
+
+# Build outputs
+codex-mcp-server/dist/
+*.js.map
+
+# Shared context sessions (user data)
+shared-context/session-*.json
+shared-context/backups/
+
+# Environment files
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db

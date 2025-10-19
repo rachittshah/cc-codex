@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./hooks/auto-delegate.sh",
+            "description": "Detect task complexity and suggest Codex delegation"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": []
+  }
+}

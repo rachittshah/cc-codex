@@ -269,3 +269,278 @@ Complex task → Need reasoning? → YES → codex exec -m gpt-5
 ---
 
 **Remember**: Codex with `gpt-5` (high reasoning effort) is your reasoning partner. Claude Code executes, Codex reasons.
+
+---
+
+## NEW: MCP Server Integration
+
+### Overview
+
+The Codex MCP Server allows Claude Code to call Codex as native tools via the Model Context Protocol. This provides seamless, structured integration between Claude and Codex.
+
+### Available MCP Tools
+
+1. **`codex_reason`** - Deep reasoning and analysis
+2. **`codex_plan`** - Generate implementation plans
+3. **`codex_spec`** - Create technical specifications
+4. **`codex_analyze`** - Analyze code/architecture
+5. **`codex_compare`** - Compare multiple options
+
+### Setup
+
+Add to `~/.claude/settings.json`:
+
+```json
+{
+  "mcpServers": {
+    "codex": {
+      "command": "node",
+      "args": ["<path-to>/codex-mcp-server/dist/index.js"]
+    }
+  }
+}
+```
+
+**Note:** No API key required! The codex CLI uses your ChatGPT account authentication (ChatGPT Plus/Pro/Team).
+
+### Usage via MCP Tools
+
+```javascript
+// Example: Use codex_plan tool
+{
+  "tool": "codex_plan",
+  "arguments": {
+    "task": "implement real-time notifications",
+    "constraints": "use WebSockets, support 10k concurrent users",
+    "timeline": "2 weeks",
+    "sessionId": "optional-session-id"
+  }
+}
+```
+
+### Slash Commands
+
+#### `/plan` - Generate Implementation Plan
+```
+User: /plan implement user authentication
+→ Calls codex_plan via MCP
+→ Returns structured plan with phases, steps, timeline
+→ Asks to proceed with implementation
+```
+
+#### `/reason` - Deep Reasoning Analysis
+```
+User: /reason should we use REST or GraphQL?
+→ Calls codex_reason via MCP
+→ Returns analysis with multiple approaches
+→ Provides recommendation with rationale
+```
+
+#### `/spec` - Create Technical Specification
+```
+User: /spec rate limiting middleware
+→ Calls codex_spec via MCP
+→ Returns comprehensive technical spec
+→ Ready for implementation
+```
+
+#### `/codex` - Generic Codex Command
+```
+User: /codex compare Redis vs Memcached
+→ Auto-detects best tool (codex_compare)
+→ Routes request appropriately
+→ Returns formatted results
+```
+
+---
+
+## NEW: Automated Delegation
+
+### Complexity Detection Hook
+
+A pre-tool hook automatically detects task complexity and suggests Codex delegation.
+
+**Triggers delegation suggestion when detecting**:
+- Architectural keywords (design, architecture, pattern)
+- Planning language (plan, roadmap, strategy)
+- Decision-making (should we, which is better)
+- Multi-step tasks (step 1, then, next)
+- Questions requiring analysis
+
+**How it works**:
+1. User sends message to Claude
+2. Hook analyzes complexity score
+3. If score ≥ 3: Suggests delegation
+4. Shows available commands (/plan, /reason, /spec, /codex)
+5. User can proceed with Claude or delegate to Codex
+
+**Example**:
+```
+User: "We need to design an authentication system. Should we use
+      JWT or session-based auth? Plan the implementation."
+
+Hook Output:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🤖 Codex Delegation Suggested
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Complexity Score: 5
+Confidence: high
+
+This task appears complex and may benefit from:
+  • Deep reasoning with Codex gpt-5
+  • Structured planning
+  • Multiple approach comparison
+
+To delegate to Codex, use one of:
+  /plan    - Generate implementation plan
+  /reason  - Deep reasoning analysis
+  /spec    - Technical specification
+  /codex   - Custom Codex task
+
+Or continue with Claude Code for direct implementation.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+---
+
+## NEW: Shared Context System
+
+### Overview
+
+Claude Code and Codex now share session context through a unified session manager.
+
+### What's Shared
+
+- **Decisions**: Architectural and implementation decisions with rationale
+- **Artifacts**: Plans, specs, analysis results, reasoning outputs
+- **History**: Timeline of actions taken by Claude, Codex, and user
+
+### Session IDs
+
+When calling Codex tools, include a `sessionId` for context continuity:
+
+```javascript
+{
+  "tool": "codex_plan",
+  "arguments": {
+    "task": "...",
+    "sessionId": "abc-123-def"  // Links to shared context
+  }
+}
+```
+
+### Context Commands
+
+```bash
+# List active sessions
+./shared-context/sync.sh list
+
+# View session summary
+./shared-context/sync.sh summary <session-id>
+
+# Backup all sessions
+./shared-context/sync.sh backup
+
+# Clean old sessions (>7 days)
+./shared-context/sync.sh clean
+```
+
+### Benefits
+
+1. **Continuity**: Codex sees previous Claude work
+2. **Traceability**: Full history of reasoning → implementation
+3. **Artifacts**: Reusable plans and specs
+4. **Learning**: Capture decisions for future reference
+
+---
+
+## Integration Workflows
+
+### Workflow 1: Plan → Implement
+
+```
+1. User: "Add payment processing to the app"
+2. Claude: Detects complexity, suggests /plan
+3. User: /plan
+4. Codex: Generates detailed plan via codex_plan
+5. Claude: Presents plan, asks to proceed
+6. User: "Yes, start with Phase 1"
+7. Claude: Implements Phase 1 using plan as guide
+8. Shared Context: Stores plan + implementation decisions
+```
+
+### Workflow 2: Reason → Decide → Implement
+
+```
+1. User: "Should we use PostgreSQL or MongoDB?"
+2. Claude: Suggests /reason
+3. User: /reason
+4. Codex: Analyzes via codex_reason, recommends PostgreSQL
+5. Claude: Presents analysis
+6. User: "Agreed, let's use PostgreSQL"
+7. Claude: Implements with PostgreSQL
+8. Shared Context: Records decision + rationale
+```
+
+### Workflow 3: Spec → Plan → Implement
+
+```
+1. User: "Create a caching layer"
+2. User: /spec caching layer for API
+3. Codex: Generates technical spec
+4. Claude: Presents spec, offers to plan
+5. User: /plan implement the caching spec
+6. Codex: Creates implementation plan
+7. Claude: Implements according to plan
+8. Shared Context: Links spec → plan → implementation
+```
+
+---
+
+## Quick Reference
+
+### CLI Commands (Original)
+```bash
+codex exec -m gpt-5 --full-auto "TASK"
+```
+
+### MCP Tools (New)
+```
+codex_reason    - Deep reasoning
+codex_plan      - Implementation planning
+codex_spec      - Technical specifications
+codex_analyze   - Code/architecture analysis
+codex_compare   - Option comparison
+```
+
+### Slash Commands (New)
+```
+/plan    - Generate plan
+/reason  - Deep analysis
+/spec    - Create spec
+/codex   - Generic Codex call
+```
+
+### Context Management (New)
+```bash
+./shared-context/sync.sh list|summary|backup|clean
+```
+
+---
+
+## Decision Matrix: When to Use What
+
+| Task | Method | Tool |
+|------|--------|------|
+| Quick implementation | Direct Claude | - |
+| Complex architecture decision | Slash command | `/reason` |
+| Feature planning | Slash command | `/plan` |
+| Technical documentation | Slash command | `/spec` |
+| Code review | MCP tool | `codex_analyze` |
+| Technology comparison | MCP tool | `codex_compare` |
+| Multi-step project | CLI | `codex exec -m gpt-5` |
+
+---
+
+**Updated Integration Principle**: Claude Code and Codex work as a unified system with seamless delegation, shared context, and automated workflow optimization.
