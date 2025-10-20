@@ -94,21 +94,26 @@ claude --version
 ### 2. Build MCP Server
 
 ```bash
-cd /Users/rachitt/cc-codex/codex-mcp-server
+# Clone the repository first
+git clone https://github.com/rachittshah/cc-codex.git
+cd cc-codex
+
+# Build the MCP server
+cd codex-mcp-server
 npm install
 npm run build
 ```
 
 ### 3. Configure Claude Code
 
-Add to `~/.claude/settings.json`:
+Add to `~/.claude/settings.json` (replace `<path-to-repo>` with your actual clone path):
 
 ```json
 {
   "mcpServers": {
     "codex": {
-      "command": "node",
-      "args": ["/Users/rachitt/cc-codex/codex-mcp-server/dist/index.js"]
+      "command": "<path-to-repo>/cc-codex/codex-mcp-server/start-server.sh",
+      "args": []
     }
   },
   "permissions": {
@@ -117,17 +122,24 @@ Add to `~/.claude/settings.json`:
 }
 ```
 
+**Example**: If you cloned to `~/projects/cc-codex`, use:
+```json
+"command": "/Users/yourname/projects/cc-codex/codex-mcp-server/start-server.sh"
+```
+
 ### 4. Link Slash Commands
 
 ```bash
-ln -sf /Users/rachitt/cc-codex/commands/*.md ~/.claude/commands/
+# From the repository root
+cd <path-to-repo>/cc-codex
+ln -sf $(pwd)/commands/*.md ~/.claude/commands/
 ```
 
 ### 5. Test It
 
 ```bash
-# Run comprehensive test
-/Users/rachitt/cc-codex/test-local-setup.sh
+# Run comprehensive test (from repository root)
+./test-local-setup.sh
 
 # Or start Claude Code
 claude
@@ -364,7 +376,7 @@ Savings: $50-100+ per project!
 model = "gpt-5"
 model_reasoning_effort = "high"  # Automatic high-quality reasoning
 
-[projects."/Users/rachitt/cc-codex"]
+[projects."<path-to-repo>/cc-codex"]
 trust_level = "trusted"
 ```
 
@@ -374,8 +386,8 @@ trust_level = "trusted"
 {
   "mcpServers": {
     "codex": {
-      "command": "node",
-      "args": ["/Users/rachitt/cc-codex/codex-mcp-server/dist/index.js"]
+      "command": "<path-to-repo>/cc-codex/codex-mcp-server/start-server.sh",
+      "args": []
     }
   },
   "permissions": {
@@ -408,10 +420,10 @@ trust_level = "trusted"
 
 ## Testing
 
-Run comprehensive integration test:
+Run comprehensive integration test (from repository root):
 
 ```bash
-/Users/rachitt/cc-codex/test-local-setup.sh
+./test-local-setup.sh
 ```
 
 Expected output:
@@ -430,8 +442,8 @@ Expected output:
 ### MCP Server Not Responding
 
 ```bash
-# Rebuild MCP server
-cd /Users/rachitt/cc-codex/codex-mcp-server
+# Rebuild MCP server (from repository root)
+cd <path-to-repo>/cc-codex/codex-mcp-server
 npm run build
 
 # Verify dist/index.js exists
@@ -444,8 +456,9 @@ ls -la dist/index.js
 # Verify links
 ls -la ~/.claude/commands/
 
-# Re-link if needed
-ln -sf /Users/rachitt/cc-codex/commands/*.md ~/.claude/commands/
+# Re-link if needed (from repository root)
+cd <path-to-repo>/cc-codex
+ln -sf $(pwd)/commands/*.md ~/.claude/commands/
 ```
 
 ### Codex Authentication Issues
@@ -465,8 +478,9 @@ codex
 # Verify settings.json
 cat ~/.claude/settings.json | jq '.mcpServers'
 
-# Check MCP server path
-ls -la /Users/rachitt/cc-codex/codex-mcp-server/dist/index.js
+# Check MCP server path exists
+ls -la <path-to-repo>/cc-codex/codex-mcp-server/start-server.sh
+ls -la <path-to-repo>/cc-codex/codex-mcp-server/dist/index.js
 
 # Restart Claude Code
 # (exit and start again)
