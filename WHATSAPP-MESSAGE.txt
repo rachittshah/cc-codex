@@ -1,0 +1,25 @@
+CODEX + CLAUDE CODE INTEGRATION
+
+Built an integration that combines Codex (gpt-5 reasoning) with Claude Code (implementation).
+
+HOW IT WORKS:
+- Codex plans and reasons through complex problems
+- Claude implements the plan and executes tasks
+- Seamless handoff via MCP (Model Context Protocol)
+- Simple slash commands: /plan, /reason, /spec, /codex
+
+WORKFLOW:
+Ask Claude to add a feature → Claude calls /plan → Codex analyzes and creates detailed plan → User approves → Claude implements → Tests run, code committed
+
+KEY VALUE:
+- Zero API costs (uses CLI subscriptions, saves $50-100+ per project)
+- Better decisions (deep reasoning before coding)
+- Faster development (planning catches issues early)
+- Global setup (configure once, works everywhere)
+
+USE CASES:
+Feature planning, architecture decisions, code review, API specs, tech selection
+
+REPO: https://github.com/rachittshah/cc-codex
+
+5-minute setup. Production ready. Full documentation included.
